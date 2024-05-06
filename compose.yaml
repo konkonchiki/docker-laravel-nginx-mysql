@@ -20,12 +20,12 @@ services:
         target: /workspace
     environment:
       # Please remove this environment variable, after created the Laravel project. Please write in .env
-      - DB_CONNECTION=${DB_CONNECTION:-mysql}
-      - DB_HOST=${DB_HOST:-db}
-      - DB_PORT=${DB_PORT:-3306}
-      - DB_DATABASE=${DB_DATABASE:-laravel}
-      - DB_USERNAME=${DB_USERNAME:-phper}
-      - DB_PASSWORD=${DB_PASSWORD:-secret}
+      - DB_CONNECTION=${DB_CONNECTION:-sqlite}
+      # - DB_HOST=${DB_HOST:-db}
+      # - DB_PORT=${DB_PORT:-3306}
+      # - DB_DATABASE=${DB_DATABASE:-laravel}
+      # - DB_USERNAME=${DB_USERNAME:-phper}
+      # - DB_PASSWORD=${DB_PASSWORD:-secret}
 
   web:
     build:
@@ -41,34 +41,34 @@ services:
         source: ./src
         target: /workspace
 
-  db:
-    build:
-      context: .
-      dockerfile: ./infra/docker/mysql/Dockerfile
-    ports:
-      - target: 3306
-        published: ${DB_PUBLISHED_PORT:-3306}
-        protocol: tcp
-        mode: host
-    configs:
-      - source: db-config
-        target: /etc/my.cnf
-    volumes:
-      - type: volume
-        source: db-store
-        target: /var/lib/mysql
-        volume:
-          nocopy: true
-    environment:
-      - MYSQL_DATABASE=${DB_DATABASE:-laravel}
-      - MYSQL_USER=${DB_USERNAME:-phper}
-      - MYSQL_PASSWORD=${DB_PASSWORD:-secret}
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-secret}
-
-  mailpit:
-    image: axllent/mailpit
-    ports:
-      - target: 8025
-        published: ${MAILPIT_PUBLISHED_PORT:-8025}
-        protocol: tcp
-        mode: host
+  # db:
+  #   build:
+  #     context: .
+  #     dockerfile: ./infra/docker/mysql/Dockerfile
+  #   ports:
+  #     - target: 3306
+  #       published: ${DB_PUBLISHED_PORT:-3306}
+  #       protocol: tcp
+  #       mode: host
+  #   configs:
+  #     - source: db-config
+  #       target: /etc/my.cnf
+  #   volumes:
+  #     - type: volume
+  #       source: db-store
+  #       target: /var/lib/mysql
+  #       volume:
+  #         nocopy: true
+  #   environment:
+  #     - MYSQL_DATABASE=${DB_DATABASE:-laravel}
+  #     - MYSQL_USER=${DB_USERNAME:-phper}
+  #     - MYSQL_PASSWORD=${DB_PASSWORD:-secret}
+  #     - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-secret}
+# 
+  # mailpit:
+  #   image: axllent/mailpit
+  #   ports:
+  #     - target: 8025
+  #       published: ${MAILPIT_PUBLISHED_PORT:-8025}
+  #       protocol: tcp
+  #       mode: host
