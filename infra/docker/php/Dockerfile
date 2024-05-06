@@ -9,12 +9,29 @@ ENV TZ=UTC \
   LANGUAGE=en_US:en \
   LC_ALL=en_US.UTF-8 \
   # composer environment
-  COMPOSER_HOME=/composer
+  COMPOSER_HOME=/composer \
+  NODE_VERSION=14
+
+# Node.jsのインストールに必要なパッケージを追加します。
+RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg \
+    && rm -rf /var/lib/apt/lists/*
+
+# Node.jsをインストールします。
+RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
+    && apt-get install -y nodejs
 
 ARG UID=1000
 ARG GID=1000
 
 COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
+
+# sqlite3を入れる
+RUN apt-get update -y \
+  && apt-get upgrade -y \
+  && apt-get install libsqlite3-dev\
+  && apt-get install sqlite3
 
 RUN <<EOF
   apt-get update
