@@ -32,10 +32,3 @@ services:
 
 
 
-  mailpit:
-    image: axllent/mailpit
-    ports:
-      - target: 8025
-        published: ${MAILPIT_PUBLISHED_PORT:-8025}
-        protocol: tcp
-        mode: host

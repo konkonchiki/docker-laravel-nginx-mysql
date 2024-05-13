@@ -10,7 +10,7 @@ ENV TZ=UTC \
   LC_ALL=en_US.UTF-8 \
   # composer environment
   COMPOSER_HOME=/composer \
-  NODE_VERSION=14
+  NODE_VERSION=22
 
 # Node.jsのインストールに必要なパッケージを追加します。
 RUN apt-get update && apt-get install -y \
